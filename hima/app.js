@@ -13,7 +13,7 @@ const logger = require('./config/logger');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000', 
+  origin: ['http://localhost:3000', 'https://hima-omega.vercel.app/'], // Replace with your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   allowedHeaders: ['Content-Type', 'Authorization'], 
 }));

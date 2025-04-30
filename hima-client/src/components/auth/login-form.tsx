@@ -16,6 +16,8 @@ export function LoginForm() {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [password, setPassword] = useState("")
 
+  const mainURI = process.env.MAIN_URI || "http://localhost:5000"
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
