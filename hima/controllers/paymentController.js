@@ -9,7 +9,7 @@ const logger = require('../config/logger');
 class PaymentController {
   async buyPremium(req, res) {
     const { phoneNumber, premiumType } = req.body;
-    const premiumPrices = { daily: 50, weekly: 300, monthly: 1000 }; // KSH
+    const premiumPrices = { daily: 1, weekly: 300, monthly: 1000 }; // KSH
     const durations = { daily: 1, weekly: 7, monthly: 30 }; // Days
     const amountInKsh = premiumPrices[premiumType];
 
