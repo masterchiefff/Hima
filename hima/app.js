@@ -13,9 +13,21 @@ const logger = require('./config/logger');
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://hima-omega.vercel.app/'], // Replace with your frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-  allowedHeaders: ['Content-Type', 'Authorization'], 
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'https://hima-omega.vercel.app/',
+      'https://new-web-app.com',
+    ];
+    // Allow requests with no origin (e.g., Postman) or allowed origins
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use(helmet());

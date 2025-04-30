@@ -18,7 +18,7 @@ export default function DashboardLayout({
     <div className="min-h-screen bg-black text-white">
       <SwahiliPattern className="text-white" />
 
-      {!isMobile && <Sidebar />}
+      {!isMobile && <Sidebar />} 
 
       <div className={`${isMobile ? "pb-20" : "ml-64"}`} style={{ width: isMobile ? "100%" : "calc(100% - 16rem)" }}>
         <main className="p-4 md:p-6 max-w-6xl mx-auto">{children}</main>
