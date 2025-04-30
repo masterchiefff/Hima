@@ -26,7 +26,7 @@ export function Sidebar() {
         <SidebarItem href="/dashboard" icon={<LayoutDashboard />} label="Dashboard" active={isActive("/dashboard")} />
         <SidebarItem href="/policies" icon={<CreditCard />} label="Policy Cards" active={isActive("/policies")} />
         <SidebarItem href="/claims" icon={<AlertCircle />} label="Claims" active={isActive("/claims")} />
-        <SidebarItem icon={<DollarSign />} label="Earnings" href="/earnings" active={isActive("/earnings")} />
+        {/* <SidebarItem icon={<DollarSign />} label="Earnings" href="/earnings" active={isActive("/earnings")} /> */}
         <SidebarItem icon={<Wallet />} label="Payments" href="/payments" active={isActive("/payments")} />
         <SidebarItem icon={<BarChart2 />} label="Statistics" href="/statistics" active={isActive("/statistics")} />
       </nav>
@@ -45,7 +45,7 @@ export function Sidebar() {
           </div>
         </div>
         <div className="text-xs text-center mb-4">Fast on-chain protection using Celo's cKES stablecoin.</div>
-        <button className="w-full bg-purple-800 text-white py-2 rounded-lg text-sm">Join Now</button>
+        <button className="w-full bg-purple-800 text-white py-2 rounded-lg text-sm">Buy Now</button>
       </div>
 
       <div className="mt-10 space-y-6">
