@@ -4,7 +4,7 @@ const walletService = require('../services/walletService');
 const policyService = require('../services/policyService');
 const ethConverter = require('../utils/ethConverter');
 const pharosService = require('../services/pharosService');
-const logger = require('../config/logger');
+const logger = require('../databases/logger');
 
 class PaymentController {
   async buyPremium(req, res) {
@@ -29,7 +29,7 @@ class PaymentController {
   async mpesaCallback(req, res) {
     const { ResultCode, ResultDesc, CallbackMetadata } = req.body.Body.stkCallback;
     if (ResultCode !== 0) {
-      logger.error(`M-Pesa callback failed: ${ResultDesc}`);
+      console.log(`M-Pesa callback failed: ${ResultDesc}`);
       return res.status(200).send('Callback processed');
     }
 
@@ -53,9 +53,9 @@ class PaymentController {
       user.premiumExpiry = expiry;
       await user.save();
 
-      logger.info(`Premium purchased: ${phoneNumber}, Type: ${premiumType}, Tx: ${txHash}`);
+      console.log(`Premium purchased: ${phoneNumber}, Type: ${premiumType}, Tx: ${txHash}`);
     } catch (error) {
-      logger.error('M-Pesa callback processing error:', error);
+      console.log('M-Pesa callback processing error:', error);
     }
     res.status(200).send('Callback processed');
   }

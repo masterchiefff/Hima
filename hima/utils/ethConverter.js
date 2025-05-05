@@ -1,5 +1,5 @@
 const axios = require('axios');
-const logger = require('../config/logger');
+const logger = require('../databases/logger');
 
 class EthConverter {
   async getEthPriceInKsh() {
@@ -10,7 +10,7 @@ class EthConverter {
         usd: response.data.ethereum.usd,
       };
     } catch (error) {
-      logger.error('ETH price fetch error:', error);
+      console.log('ETH price fetch error:', error);
       throw error;
     }
   }

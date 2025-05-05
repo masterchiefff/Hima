@@ -1,5 +1,5 @@
 const { ethers } = require('ethers');
-const logger = require('../config/logger');
+const logger = require('../databases/logger');
 
 class WalletService {
   constructor() {
@@ -23,13 +23,13 @@ class WalletService {
         });
 
         const receipt = await tx.wait();
-        logger.info(`Wallet created and funded: ${wallet.address}, Tx: ${tx.hash}`);
+        console.log(`Wallet created and funded: ${wallet.address}, Tx: ${tx.hash}`);
         return {
           address: wallet.address,
           txHash: tx.hash,
         };
       } catch (error) {
-        logger.error(`Attempt ${attempt} failed: ${error.message}`);
+        console.log(`Attempt ${attempt} failed: ${error.message}`);
         if (attempt === retries) {
           throw new Error(`Failed to create wallet after ${retries} attempts: ${error.message}`);
         }
@@ -45,10 +45,10 @@ class WalletService {
         value: ethers.parseEther(amountInEth.toString()),
       });
       const receipt = await tx.wait();
-      logger.info(`Wallet funded: ${walletAddress}, Amount: ${amountInEth} ETH, Tx: ${tx.hash}`);
+      console.log(`Wallet funded: ${walletAddress}, Amount: ${amountInEth} ETH, Tx: ${tx.hash}`);
       return tx.hash;
     } catch (error) {
-      logger.error('Wallet funding error:', error);
+      console.log('Wallet funding error:', error);
       throw error;
     }
   }

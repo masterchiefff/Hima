@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const logger = require('../config/logger');
+const logger = require('../databases/logger');
 
 const auth = async (req, res, next) => {
   try {
@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
     req.userId = decoded.id;
     next();
   } catch (error) {
-    logger.error('Authentication error:', error);
+    console.log('Authentication error:', error);
     res.status(401).json({ message: 'Invalid token' });
   }
 };

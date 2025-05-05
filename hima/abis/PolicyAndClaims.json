@@ -3,23 +3,17 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "claimId",
+				"name": "policyIndex",
 				"type": "uint256"
 			}
 		],
-		"name": "approveClaim",
+		"name": "claim",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "initialOwner",
-				"type": "address"
-			}
-		],
+		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
@@ -50,12 +44,6 @@
 		"inputs": [
 			{
 				"indexed": true,
-				"internalType": "uint256",
-				"name": "claimId",
-				"type": "uint256"
-			},
-			{
-				"indexed": true,
 				"internalType": "address",
 				"name": "user",
 				"type": "address"
@@ -63,27 +51,8 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "amount",
+				"name": "policyIndex",
 				"type": "uint256"
-			}
-		],
-		"name": "ClaimApproved",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "claimId",
-				"type": "uint256"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
 			},
 			{
 				"indexed": false,
@@ -93,12 +62,12 @@
 			},
 			{
 				"indexed": false,
-				"internalType": "string",
-				"name": "description",
-				"type": "string"
+				"internalType": "enum HimaInsurance.PolicyType",
+				"name": "policyType",
+				"type": "uint8"
 			}
 		],
-		"name": "ClaimSubmitted",
+		"name": "ClaimProcessed",
 		"type": "event"
 	},
 	{
@@ -131,21 +100,15 @@
 			},
 			{
 				"indexed": false,
-				"internalType": "enum PolicyAndClaims.PolicyType",
+				"internalType": "uint256",
+				"name": "policyIndex",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "enum HimaInsurance.PolicyType",
 				"name": "policyType",
 				"type": "uint8"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "expiry",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
 			}
 		],
 		"name": "PolicyPurchased",
@@ -154,7 +117,7 @@
 	{
 		"inputs": [
 			{
-				"internalType": "enum PolicyAndClaims.PolicyType",
+				"internalType": "enum HimaInsurance.PolicyType",
 				"name": "policyType",
 				"type": "uint8"
 			}
@@ -174,24 +137,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "description",
-				"type": "string"
-			}
-		],
-		"name": "submitClaim",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "newOwner",
 				"type": "address"
@@ -203,70 +148,39 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "withdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"stateMutability": "payable",
 		"type": "receive"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "ACCIDENT_PAYOUT",
+		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
-			}
-		],
-		"name": "claims",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "description",
-				"type": "string"
-			},
-			{
-				"internalType": "bool",
-				"name": "approved",
-				"type": "bool"
-			},
-			{
-				"internalType": "bool",
-				"name": "processed",
-				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			}
-		],
-		"name": "getPolicy",
+		"inputs": [],
+		"name": "ACCIDENT_POLICY_COST",
 		"outputs": [
 			{
-				"internalType": "enum PolicyAndClaims.PolicyType",
+				"internalType": "uint256",
 				"name": "",
-				"type": "uint8"
-			},
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "COOLDOWN_PERIOD",
+		"outputs": [
 			{
 				"internalType": "uint256",
 				"name": "",
@@ -284,12 +198,68 @@
 				"type": "address"
 			}
 		],
-		"name": "getUserClaims",
+		"name": "getPolicies",
 		"outputs": [
 			{
-				"internalType": "uint256[]",
+				"components": [
+					{
+						"internalType": "bool",
+						"name": "active",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastClaimTimestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum HimaInsurance.PolicyType",
+						"name": "policyType",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct HimaInsurance.Policy[]",
 				"name": "",
-				"type": "uint256[]"
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "MAX_ACTIVE_POLICIES",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "MEDICAL_PAYOUT",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "MEDICAL_POLICY_COST",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -309,14 +279,8 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "enum PolicyAndClaims.PolicyType",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"name": "policyDurations",
+		"inputs": [],
+		"name": "THEFT_PAYOUT",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -328,14 +292,8 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "enum PolicyAndClaims.PolicyType",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"name": "policyPrices",
+		"inputs": [],
+		"name": "THEFT_POLICY_COST",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -357,38 +315,24 @@
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
-			}
-		],
-		"name": "userClaims",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
 			}
 		],
 		"name": "userPolicies",
 		"outputs": [
 			{
-				"internalType": "enum PolicyAndClaims.PolicyType",
-				"name": "policyType",
-				"type": "uint8"
+				"internalType": "bool",
+				"name": "active",
+				"type": "bool"
 			},
 			{
 				"internalType": "uint256",
-				"name": "expiry",
+				"name": "lastClaimTimestamp",
 				"type": "uint256"
+			},
+			{
+				"internalType": "enum HimaInsurance.PolicyType",
+				"name": "policyType",
+				"type": "uint8"
 			}
 		],
 		"stateMutability": "view",

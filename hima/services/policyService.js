@@ -1,5 +1,5 @@
 const { ethers } = require('ethers');
-const logger = require('../config/logger');
+const logger = require('../databases/logger');
 const policyAbi = require('../abis/PolicyAndClaims.json');
 
 class PolicyService {
@@ -16,10 +16,10 @@ class PolicyService {
       const price = await this.contract.policyPrices(policyEnum);
       const tx = await this.contract.purchasePolicy(policyEnum, { value: price, from: walletAddress });
       const receipt = await tx.wait();
-      logger.info(`Policy purchased for ${walletAddress}: ${policyType}, Tx: ${tx.hash}`);
+      console.log(`Policy purchased for ${walletAddress}: ${policyType}, Tx: ${tx.hash}`);
       return tx.hash;
     } catch (error) {
-      logger.error('Policy purchase error:', error);
+      console.log('Policy purchase error:', error);
       throw error;
     }
   }
@@ -29,10 +29,10 @@ class PolicyService {
       const amount = ethers.parseEther(amountInEth.toString());
       const tx = await this.contract.submitClaim(amount, description, { from: walletAddress });
       const receipt = await tx.wait();
-      logger.info(`Claim submitted for ${walletAddress}, Tx: ${tx.hash}`);
+      console.log(`Claim submitted for ${walletAddress}, Tx: ${tx.hash}`);
       return tx.hash;
     } catch (error) {
-      logger.error('Claim submission error:', error);
+      console.log('Claim submission error:', error);
       throw error;
     }
   }

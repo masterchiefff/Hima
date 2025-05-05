@@ -1,5 +1,5 @@
 const axios = require('axios');
-const logger = require('../config/logger');
+const logger = require('../databases/logger');
 
 class MpesaService {
   async initiatePayment(phoneNumber, amount, premiumType) {
@@ -42,7 +42,7 @@ class MpesaService {
     );
 
     if (response.data.ResponseCode === '0') {
-      logger.info(`STK Push initiated for ${phoneNumber}, premium: ${premiumType}`);
+      console.log(`STK Push initiated for ${phoneNumber}, premium: ${premiumType}`);
     } else {
       throw new Error(`STK Push failed: ${response.data.ResponseDescription}`);
     }

@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const Claim = require('../models/Claim');
-const logger = require('../config/logger');
+const logger = require('../databases/logger');
 
 class ClaimController {
   async createClaim(req, res) {
@@ -17,7 +17,7 @@ class ClaimController {
       const claim = new Claim({ userId, description, amount });
       await claim.save();
 
-      logger.info(`Claim created: ${claim._id} by user ${userId}`);
+      console.log(`Claim created: ${claim._id} by user ${userId}`);
       res.status(201).json({ claimId: claim._id, status: claim.status });
     } catch (error) {
       throw error;
