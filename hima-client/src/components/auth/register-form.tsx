@@ -34,12 +34,12 @@ export function RegisterForm() {
     }
   }, [status, router])
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: { target: { id: any; value: any } }) => {
     const { id, value } = e.target
     setFormData((prev) => ({ ...prev, [id]: value }))
   }
 
-  const handleNext = (e) => {
+  const handleNext = (e: { preventDefault: () => void }) => {
     e.preventDefault()
     if (!formData.fullName || !formData.phoneNumber || !formData.email) {
       setError("Please fill in all required fields")
@@ -57,7 +57,7 @@ export function RegisterForm() {
     setStep(2)
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     setIsLoading(true)
     setError("")
@@ -103,13 +103,13 @@ export function RegisterForm() {
         throw new Error(data.message || `Signup failed with status ${response.status}`)
       }
 
-      sessionStorage.setItem("token", data.token)
-      sessionStorage.setItem("walletAddress", data.walletAddress)
+      localStorage.setItem("token", data.token)
+      localStorage.setItem("walletAddress", data.walletAddress)
       setWalletAddress(data.walletAddress)
       setTimeout(() => router.push("/dashboard"), 2000)
     } catch (err) {
       console.error("Signup error:", err)
-      setError(err.message || "An error occurred during signup")
+      setError(err instanceof Error ? err.message : "An error occurred during signup")
       setIsLoading(false)
     }
   }
